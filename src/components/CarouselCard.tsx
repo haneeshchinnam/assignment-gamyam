@@ -10,6 +10,7 @@ const CarouselCard = ({
   isVerified,
   mandal,
   price,
+  owner,
 }: {
   id: number;
   acres: number;
@@ -19,6 +20,7 @@ const CarouselCard = ({
   district: string;
   mandal: string;
   price: string;
+  owner: boolean;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -33,7 +35,11 @@ const CarouselCard = ({
   };
 
   return (
-    <section className="rounded-lg flex flex-col shadow-lg hover:shadow-lg transition-shadow overflow-hidden h-80">
+    <section
+      className={`rounded-lg flex flex-col shadow-lg hover:shadow-lg transition-shadow overflow-hidden h-80 ${
+        owner && "border-yellow-400 border-[1px]"
+      }`}
+    >
       <section className="relative">
         <div
           className="flex duration-700 ease-in-out"
@@ -57,6 +63,11 @@ const CarouselCard = ({
             </div>
           ))}
         </div>
+        {owner && (
+          <p className="bg-yellow-400 w-16 h-6 top-2 left-0 absolute rounded-r-2xl">
+            Owner
+          </p>
+        )}
         <section className="absolute top-2 right-2 flex flex-row gap-3">
           <button className="p-1.5 bg-white/95 rounded-full">
             <Heart size={18} />
@@ -77,10 +88,14 @@ const CarouselCard = ({
       <section className="p-2 flex flex-col">
         <div className="flex items-center font-bold text-base gap-1.5">
           {price} <div className="w-1.5 h-1.5 bg-black rounded-full"></div>{" "}
-         {acres} Acres {guntas} Guntas{" "}
-          {isVerified && <img src="/social-media.png" alt="media" width={16} height={16} />}
+          {acres} Acres {guntas} Guntas{" "}
+          {isVerified && (
+            <img src="/social-media.png" alt="media" width={16} height={16} />
+          )}
         </div>
-        <p className="text-gray-400 text-md">{mandal}, {district} (dt)</p>
+        <p className="text-gray-400 text-md">
+          {mandal}, {district} (dt)
+        </p>
       </section>
     </section>
   );

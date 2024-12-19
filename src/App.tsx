@@ -19,6 +19,7 @@ function App() {
       district: string;
       mandal: string;
       price: string;
+      owner: boolean;
     }[]
   >([]);
 
@@ -48,6 +49,7 @@ function App() {
             )?.name ?? "",
           id: l.id,
           price: `${convertToCrores(l.price_per_acre_crore)} Cr /acre`,
+          owner: l.seller_type === "owner"
         }));
 
         setCardData((prev) => [
@@ -70,8 +72,6 @@ function App() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-
-  console.log("page", page, cardData.length);
 
   function convertToCrores(price: PricePerAcre): number {
     return price.lakh / 100 + price.crore;
@@ -124,6 +124,7 @@ function App() {
             isVerified={data.isVerified}
             mandal={data.mandal}
             price={data.price}
+            owner={data.owner}
           />
         ))}
 
@@ -166,6 +167,7 @@ interface LandData {
   division_info: DivisionInfo[];
   id: number;
   price_per_acre_crore: PricePerAcre;
+  seller_type: string;
 }
 
 interface ApiResponse {
