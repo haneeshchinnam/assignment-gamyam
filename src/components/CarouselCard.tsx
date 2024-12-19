@@ -33,7 +33,7 @@ const CarouselCard = ({
   };
 
   return (
-    <section className="rounded-lg flex flex-col shadow-lg hover:shadow-lg transition-shadow overflow-hidden h-80 max-w-96">
+    <section className="rounded-lg flex flex-col shadow-lg hover:shadow-lg transition-shadow overflow-hidden h-80">
       <section className="relative">
         <div
           className="flex duration-700 ease-in-out"

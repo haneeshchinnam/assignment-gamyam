@@ -32,18 +32,20 @@ function App() {
           `https://prod-be.1acre.in/lands/?division=24&page_size=10&page=${page}`
         );
         const data: ApiResponse = await resp.json();
-      
+
         const mappedData = data.results.map((l: LandData) => ({
           acres: l.total_land_size_in_acres.acres,
           guntas: l.total_land_size_in_acres.guntas,
           isVerified: l.is_basic_verified,
           images: l.land_media.map((p: LandMedia) => p.image),
-          district: l.division_info.find(
-            (info: DivisionInfo) => info.division_type === "district"
-          )?.name ?? "",
-          mandal: l.division_info.find(
-            (info: DivisionInfo) => info.division_type === "mandal"
-          )?.name ?? "",
+          district:
+            l.division_info.find(
+              (info: DivisionInfo) => info.division_type === "district"
+            )?.name ?? "",
+          mandal:
+            l.division_info.find(
+              (info: DivisionInfo) => info.division_type === "mandal"
+            )?.name ?? "",
           id: l.id,
           price: `${convertToCrores(l.price_per_acre_crore)} Cr /acre`,
         }));
@@ -76,7 +78,8 @@ function App() {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleScroll = useCallback(debounce(() => {
+  const handleScroll = useCallback(
+    debounce(() => {
       if (observerRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = observerRef.current;
         if (
@@ -105,31 +108,33 @@ function App() {
   }, [handleScroll]);
 
   return (
-    <section
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 overflow-y-auto h-[100vh] px-2 py-2 md:px-8 gap-3"
-      ref={observerRef}
-    >
-      {cardData.map((data) => (
-        <CarouselCard
-          key={data.id}
-          acres={data.acres}
-          district={data.district}
-          guntas={data.guntas}
-          id={data.id}
-          images={data.images}
-          isVerified={data.isVerified}
-          mandal={data.mandal}
-          price={data.price}
-        />
-      ))}
+    <main className="w-[100vw] flex flex-col items-center">
+      <section
+        className="grid grid-cols-1 col-span-full sm:grid-cols-2 lg:grid-cols-4 overflow-y-auto h-[100vh] px-2 py-2 md:px-8 gap-3"
+        ref={observerRef}
+      >
+        {cardData.map((data) => (
+          <CarouselCard
+            key={data.id}
+            acres={data.acres}
+            district={data.district}
+            guntas={data.guntas}
+            id={data.id}
+            images={data.images}
+            isVerified={data.isVerified}
+            mandal={data.mandal}
+            price={data.price}
+          />
+        ))}
 
-      {loading && (
-        <div className="col-span-full flex flex-col items-center gap-2 w-full h-full">
-          <TailSpin color="#00BFFF" height={26} width={26} />
-          <p>Loading...</p>
-        </div>
-      )}
-    </section>
+        {loading && (
+          <div className="col-span-full flex flex-col items-center gap-2 w-full h-full">
+            <TailSpin color="#00BFFF" height={26} width={26} />
+            <p>Loading...</p>
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
 
